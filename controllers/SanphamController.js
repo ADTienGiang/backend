@@ -219,7 +219,7 @@ export const deleteSanpham = async (req, res) => {
     }
   
     const name = req.body.ten;
-    const url = `${req.protocol}://${req.get('host')}/images/${fileName}`;
+    const url = `${process.env.URL_BACKEND}/images/${fileName}`;
   
     try {
       // Cập nhật sản phẩm
