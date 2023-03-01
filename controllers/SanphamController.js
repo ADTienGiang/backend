@@ -3,6 +3,12 @@ import Loai from "../models/LoaiModel.js";
 import Thuonghieu from "../models/ThuonghieuModel.js";
 import path from "path";
 import fs from "fs";
+import cloudinary from "cloudinary";
+cloudinary.config({
+  cloud_name: 'dckghefex',
+  api_key: '774948835297821',
+  api_secret: 'SWP0BEDXndqUFCMFoxAK-xGiwYM'
+});
 
  //lấy tất cả sản phẩm
 export const getAllSanpham = async (req, res) => {
@@ -34,8 +40,8 @@ export const getAllSanpham = async (req, res) => {
       const fileSize = file.data.length;
       const ext = path.extname(file.name);
       const fileName = file.md5 + ext;
-      const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
-      const allowedType = [".png", ".jpg", ".jpeg"];
+      const url = `${process.env.URL_BACKEND}/images/${fileName}`;
+        const allowedType = [".png", ".jpg", ".jpeg"];
   
       // Kiểm tra định dạng ảnh: ['.png','.jpg','.jpeg']
       if (!allowedType.includes(ext.toLowerCase())) {
@@ -52,7 +58,7 @@ export const getAllSanpham = async (req, res) => {
         if (err) return res.status(500).json({ msg: err.message });
         try {
           // Thêm sản phẩm vào cơ sở dữ liệu
-          const sanpham = await Sanpham.create({
+          await Sanpham.create({
             ten: ten,
             gioitinh: gioitinh,
             kichco: kichco,
@@ -67,8 +73,8 @@ export const getAllSanpham = async (req, res) => {
           });
   
           // Lấy thông tin loại và thương hiệu của sản phẩm từ cơ sở dữ liệu
-          const loai = await Loai.findByPk(loaiId);
-          const thuongHieu = await Thuonghieu.findByPk(thuonghieuId);
+          await Loai.findByPk(loaiId);
+          await Thuonghieu.findByPk(thuonghieuId);
   
           // // Thêm sản phẩm vào danh sách sản phẩm của loại
           // await loai.addSanpham(sanpham);
@@ -85,6 +91,60 @@ export const getAllSanpham = async (req, res) => {
       console.log(error.message);
     }
   };
+  // export const themSanpham = async (req, res) => {
+  //   try {
+  //     const { ten, gioitinh, kichco, mau, chatlieu, gia, soluong, hinhanh, loaiId, thuonghieuId } = req.body;
+  
+  //     // Kiểm tra xem hình ảnh có được gửi lên hay không
+  //     if (req.files === null) {
+  //       return res.status(400).json({ msg: "Không có file nào được thêm" });
+  //     }
+  
+  //     // Lấy thông tin về file ảnh
+  //     const file = req.files.hinhanh;
+  //     const allowedType = [".png", ".jpg", ".jpeg"];
+  
+  //     // Kiểm tra định dạng ảnh: ['.png','.jpg','.jpeg']
+  //     if (!allowedType.includes(path.extname(file.name))) {
+  //       return res.status(422).json({ msg: "Hình ảnh không hợp lệ" });
+  //     }
+  //     if (!hinhanh.hasOwnProperty('public_id')) {
+  //       return res.status(400).json({ msg: "Hình ảnh không hợp lệ" });
+  //     }
+      
+  //     // Upload hình ảnh lên Cloudinary
+  //     const result = await cloudinary.v2.uploader.upload(file.tempFilePath);
+  
+  //     // Thêm sản phẩm vào cơ sở dữ liệu
+  //     const sanpham = await Sanpham.create({
+  //       ten: ten,
+  //       gioitinh: gioitinh,
+  //       kichco: kichco,
+  //       mau: mau,
+  //       chatlieu: chatlieu,
+  //       gia: gia,
+  //       soluong: soluong,
+  //       hinhanh: result.public_id,
+  //       url: result.url,
+  //       loaiId: loaiId,
+  //       thuonghieuId: thuonghieuId,
+  //     });
+  
+  //     // Lấy thông tin loại và thương hiệu của sản phẩm từ cơ sở dữ liệu
+  //     const loai = await Loai.findByPk(loaiId);
+  //     const thuongHieu = await Thuonghieu.findByPk(thuonghieuId);
+  
+  //     // Thêm sản phẩm vào danh sách sản phẩm của loại
+  //     await loai.addSanpham(sanpham);
+  
+  //     // Thêm sản phẩm vào danh sách sản phẩm của thương hiệu
+  //     await thuongHieu.addSanpham(sanpham);
+  
+  //     res.status(201).json({ msg: "Thêm sản phẩm thành công" });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
   
   // Xóa sản phẩm
 export const deleteSanpham = async (req, res) => {
