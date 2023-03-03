@@ -15,4 +15,6 @@ router.post('/sanpham', themSanpham);
 router.get('/sanpham/:id', getSanPhamById);
 router.patch('/sanpham/:id', capnhatSanpham);
 router.delete('/sanpham/:id', deleteSanpham);
+//api 
+router.get('/', getAllSanpham);
 export default router;

@@ -189,11 +189,11 @@ export const deleteSanpham = async (req, res) => {
       return res.status(404).json({msg: 'Không tìm thấy dữ liệu nào'});
     }
   
-    let fileName = '';
-    if (req.files === null) {
+    let fileName = "";
+    if(req.files === null){
       fileName = product.hinhanh;
-    } else {
-      const file = req.files.file;
+  } else {
+      const file = req.files.hinhanh;
       const fileSize = file.data.length;
       const ext = path.extname(file.name);
       fileName = file.md5 + ext;
