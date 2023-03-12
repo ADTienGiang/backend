@@ -1,5 +1,5 @@
 import GioHang from "../models/giohangModel.js"
-import SanPham from "../models/sanphamModel.js";
+import SanPham from "../models/SanphamModel.js";
 import KhachHang from "../models/KhachHangModel.js";
 import SanphamGiohang from "../models/sanpham_giohangModel.js";
 import sequelize from "../config/database.js  ";
