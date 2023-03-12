@@ -165,8 +165,6 @@ export const deleteSanpham = async (req, res) => {
       res.status(500).json({ error: "Lỗi server" });
     }
   };
-  
-
   //sửa sản phẩm 
   export const capnhatSanpham = async (req, res) => {
     const product = await Sanpham.findOne({
