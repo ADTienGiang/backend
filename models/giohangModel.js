@@ -1,7 +1,7 @@
 import {Sequelize} from "sequelize";
 import db from "../config/database.js";
 import khachhang from "./KhachHangModel.js";
-import Sanpham from "./sanphamModel.js";
+import Sanpham from "./SanphamModel.js";
 const {DataTypes} = Sequelize;
 const giohang = db.define('giohangs', {
   id: {
