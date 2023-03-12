@@ -30,6 +30,7 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: 'Đăng nhập thất bại' });
+    console.log("loi" + error)
   }
 };
 
